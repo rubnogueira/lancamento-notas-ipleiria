@@ -9,7 +9,7 @@ UCS = [
         {'uc':'P2','url':'https://ead.ipleiria.pt/2017-18/course/view.php?id=3711'},
         {'uc':'Dummy','url':'https://ead.ipleiria.pt/2017-18/course/view.php?id=6969'},
         {'uc':'Outra','url':'https://ead.ipleiria.pt/2017-18/course/view.php?id=1234'},
-        ]
+      ]
 
 hashpath = os.path.join(sys.path[0],'hashfiles.dat')
 s = requests.Session()
@@ -75,21 +75,22 @@ def save_hashfile(content):
     stream.write(content)
     stream.close()    
 
-if login():
-    while True:
-        hashes = json.loads(return_hashfile())
-        print("A verificar alterações... ", end = "")
-        for x in UCS:
-            hash = request_uc(x['url'])
-            if x['uc'] in hashes:
-                if hashes[x['uc']] != hash:
-                    print("\n>>> Houve alteracoes a " + str(x['uc']) + "!!!")
-            hashes[x['uc']] = hash
+if __name__ == "__main__":
+    if login():
+        while True:
+            hashes = json.loads(return_hashfile())
+            print("A verificar alterações... ", end = "")
+            for x in UCS:
+                hash = request_uc(x['url'])
+                if x['uc'] in hashes:
+                    if hashes[x['uc']] != hash:
+                        print("\n>>> Houve alteracoes a " + str(x['uc']) + "!!!")
+                hashes[x['uc']] = hash
 
-        save_hashfile(json.dumps(hashes))
-        if WAITING < 5:
-            print("a aguardar " + str(5) + " minutos")
-            time.sleep(5 * 60)
-        else:
-            print("a aguardar " + str(WAITING) + " minutos")
-            time.sleep(WAITING * 60)
+            save_hashfile(json.dumps(hashes))
+            if WAITING < 5:
+                print("a aguardar " + str(5) + " minutos")
+                time.sleep(5 * 60)
+            else:
+                print("a aguardar " + str(WAITING) + " minutos")
+                time.sleep(WAITING * 60)
