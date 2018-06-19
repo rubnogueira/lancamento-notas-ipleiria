@@ -7,9 +7,8 @@ WAITING = 10 #10 minutos
 UCS = [
         {'uc':'SO','url':'https://ead.ipleiria.pt/2017-18/course/view.php?id=3659'},
         {'uc':'P2','url':'https://ead.ipleiria.pt/2017-18/course/view.php?id=3711'},
-        {'uc':'Dummy','url':'https://ead.ipleiria.pt/2017-18/course/view.php?id=6969'},
-        {'uc':'Outra','url':'https://ead.ipleiria.pt/2017-18/course/view.php?id=1234'},
-        ]
+        {'uc':'Estatistica','url':'https://ead.ipleiria.pt/2017-18/course/view.php?id=3688'}
+      ]
 
 hashpath = os.path.join(sys.path[0],'hashfiles.dat')
 s = requests.Session()
