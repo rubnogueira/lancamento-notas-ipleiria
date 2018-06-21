@@ -8,15 +8,17 @@ Para correr o script necessita de um sistema com Python instalado.
 
 ### Pre requisitos
 
-Necessita de um sistema com Python configurado. Testado em Python 2.7-3.5. Necessita do módulo requests instalado. Para configurar corra o seguinte comando.
+Necessita de um sistema com Python configurado. Testado em Python 2.7-3.5. Necessita do módulo requests e pymsgbox instalado. Para configurar corra o seguinte comando.
 
 ```
-python -m pip install requests
+python -m pip install requests pymsgbox
 ```
 
 ### Configurando os seus dados
 
-Necessita de editar o script Python e alterar as variáveis com o seu username e password.
+Pode introduzir as suas variáveis via GUI ou CLI. Na versão GUI basta introduzir nos prompts as suas credenciais.
+
+Com a versão CLI, necessita de editar o script Python e alterar as variáveis com o seu username e password.
 
 ```
 USERNAME = "2171234"
@@ -40,3 +42,4 @@ UCS = [
 ## Autores
 
 * **Ruben Nogueira** - [rubnogueira](https://github.com/rubnogueira)
+* **André Clemente**

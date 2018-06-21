@@ -1,16 +1,33 @@
 import requests,time,json,re,os,sys,hashlib
+try: import winsound
+except: pass
 
-USERNAME = ""
-PASSWORD = ""
-WAITING = 10 #10 minutos
+GUI = True
+
+if GUI:
+        import pymsgbox
+        USERNAME = pymsgbox.native.prompt('Número de aluno:', default='2171234')
+        PASSWORD = pymsgbox.native.password('Password:', default='')
+else:
+        USERNAME = "2171234"
+        PASSWORD = ""
+
+WAITING = 5 #5 minutos
+
+if USERNAME == "":
+	exit(0)
+if PASSWORD == "":
+	exit(0)
 
 UCS = [
-        {'uc':'SO','url':'https://ead.ipleiria.pt/2017-18/course/view.php?id=3659'},
-        {'uc':'P2','url':'https://ead.ipleiria.pt/2017-18/course/view.php?id=3711'},
-        {'uc':'Dummy','url':'https://ead.ipleiria.pt/2017-18/course/view.php?id=6969'},
-        {'uc':'Outra','url':'https://ead.ipleiria.pt/2017-18/course/view.php?id=1234'},
+        {'uc':'INov','url':'https://ead.ipleiria.pt/2017-18/course/view.php?id=2712'},
+        {'uc':'Est','url':'https://ead.ipleiria.pt/2017-18/course/view.php?id=3688'},
+        {'uc':'SI','url':'https://ead.ipleiria.pt/2017-18/course/view.php?id=3443'},
+        {'uc':'SBD','url':'https://ead.ipleiria.pt/2017-18/course/view.php?id=3689'},
+        {'uc':'MD','url':'https://ead.ipleiria.pt/2017-18/course/view.php?id=3715'},
+        {'uc':'SIE','url':'https://ead.ipleiria.pt/2017-18/course/view.php?id=3731'},
       ]
-
+ 
 hashpath = os.path.join(sys.path[0],'hashfiles.dat')
 s = requests.Session()
 
@@ -75,6 +92,20 @@ def save_hashfile(content):
     stream.write(content)
     stream.close()    
 
+def alert_alt(uc):
+    duration = 100  # millisecond
+    freq = 1800   # Hz
+    try:
+            winsound.Beep(freq, duration)
+            winsound.Beep(freq, duration)
+            winsound.Beep(freq, duration)
+            winsound.Beep(freq, duration)
+    except:
+            pass
+    print('Houve alteracoes na uc: '+ uc +'!')
+    if GUI:
+            pymsgbox.native.alert('Houve alteracoes na uc: '+ uc +'!', 'Alteracoes!', 'OK')
+
 if __name__ == "__main__":
     if login():
         while True:
@@ -84,9 +115,8 @@ if __name__ == "__main__":
                 hash = request_uc(x['url'])
                 if x['uc'] in hashes:
                     if hashes[x['uc']] != hash:
-                        print("\n>>> Houve alteracoes a " + str(x['uc']) + "!!!")
+                        alert_alt(str(x['uc']))
                 hashes[x['uc']] = hash
-
             save_hashfile(json.dumps(hashes))
             if WAITING < 5:
                 print("a aguardar " + str(5) + " minutos")
